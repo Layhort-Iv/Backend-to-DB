@@ -15,7 +15,7 @@ router.post("/", async (req, res) => {
   const tasks = await loadTasksCollection();
 
   await tasks.insertOne({
-    task: req.body.text,
+    task: req.body.task,
     dateCreated: new Date(),
   });
 
@@ -33,8 +33,11 @@ router.delete("/:id", async (req, res) => {
 //connecting to database
 async function loadTasksCollection() {
   const client = await mongodb.MongoClient.connect(
-    "mongodb+srv://ivlayhort:1234@ivlayhort-cloud-db.fklrp.mongodb.net/my_tasklist?retryWrites=true&w=majority",
-    { useNewUrlParser: true } 
+    "mongodb+srv://ivlayhort:1234@ivlayhort-cloud-db.fklrp.mongodb.net/test?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
   );
 
   return client.db("my_tasklist").collection("mytasks");
